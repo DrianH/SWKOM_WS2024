@@ -1,7 +1,21 @@
-version: '3'
 services:
   springapp:
-    build: .
     ports:
       - "8080:8080"
     container_name: springboot_container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./uploads:/uploads  # Mount the uploads directory to persist files
+    environment:
+      - SPRING_SERVLET_MULTIPART_ENABLED=true
+      - SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE=100MB
+      - SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE=100MB
+      - SERVER_PORT=8080
+    networks:
+      - spring-boot-network
+
+networks:
+  spring-boot-network:
+    driver: bridge
