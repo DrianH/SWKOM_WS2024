@@ -10,12 +10,12 @@ public class DemoController {
 
     @GetMapping("/hello")
     public String sayHello(){
-        return "Hello again World!";
+        return "Hello World!";
     }
 
     @GetMapping("/members")
     public String getMembers(){
-        return "Drian, Juled, Alfredo, Bruda";
+        return "Drian, Juled, Alfredo";
     }
 
     @GetMapping("/status")

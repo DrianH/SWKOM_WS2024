@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>File Upload System</h1>
+
+<div class="upload-container">
+    <h2>Upload a File</h2>
+    <form id="uploadForm">
+        <input type="file" id="fileInput" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+    <p id="uploadStatus"></p>
+</div>
+
+<div class="list-container">
+    <h2>Uploaded Files</h2>
+    <ul id="fileList"></ul>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
