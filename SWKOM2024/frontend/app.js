@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fileList.innerHTML = ''; // Clear current list
         files.forEach(file => {
           const li = document.createElement('li');
-          li.textContent = file;
+          li.classList.add('list-group-item');
+          li.textContent = file; // Assuming file.name is in the response
           fileList.appendChild(li);
         });
       })

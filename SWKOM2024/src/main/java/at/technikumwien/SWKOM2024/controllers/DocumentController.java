@@ -1,8 +1,8 @@
 package at.technikumwien.SWKOM2024.controllers;
 
+import at.technikumwien.SWKOM2024.repositories.DocumentRepository;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/files")
-public class FileController {
+public class DocumentController {
     private String uploadDir = "/uploads";
 
     @Operation(summary = "Upload a file")
@@ -39,6 +38,7 @@ public class FileController {
 
             return ResponseEntity.ok("File uploaded successfully: " + file.getOriginalFilename());
         } catch (IOException e) {
+            System.err.println("File upload failed: " + e.getMessage());
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
         }
     }
@@ -50,35 +50,4 @@ public class FileController {
         String[] files = directory.list();
         return ResponseEntity.ok(Arrays.asList(files));
     }
-
-    /*@Operation(summary = "Download a file")
-    @GetMapping("/download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("filename") String filename) {
-        try {
-            File file = new File(uploadDir + "/" + filename);
-            Path path = file.toPath();
-            Resource resource = new UrlResource(path.toUri());
-
-            if (resource.exists()) {
-                return ResponseEntity.ok()
-                        .header("Content-Disposition", "attachment; filename=\"" + filename + "\"")
-                        .body(resource);
-            } else {
-                return ResponseEntity.status(404).body(null);
-            }
-        } catch (IOException e) {
-            return ResponseEntity.status(500).body(null);
-        }
-    }
-
-    @Operation(summary = "Delete a file")
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteFile(@RequestParam("filename") String filename) {
-        File file = new File(uploadDir + "/" + filename);
-        if (file.exists() && file.delete()) {
-            return ResponseEntity.ok("File deleted successfully: " + filename);
-        } else {
-            return ResponseEntity.status(404).body("File not found or unable to delete: " + filename);
-        }
-    }*/
 }
