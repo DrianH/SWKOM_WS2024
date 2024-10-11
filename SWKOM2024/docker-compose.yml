@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./uploads:/uploads  # Mount the uploads directory to persist files
+    ports:
+      - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mydatabase
       - SPRING_DATASOURCE_USERNAME=myuser
