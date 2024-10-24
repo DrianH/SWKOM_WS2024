@@ -31,6 +31,16 @@ services:
     networks:
       - spring-boot-network
 
+  adminer:
+    image: adminer:latest
+    container_name: adminer_container
+    ports:
+      - 8081:8080  # Adminer will be accessible on http://localhost:8081
+    depends_on:
+      - db
+    networks:
+      - spring-boot-network
+
   nginx:
     image: nginx:latest
     container_name: nginx_container

@@ -10,14 +10,26 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(files => {
         fileList.innerHTML = ''; // Clear current list
-        files.forEach(file => {
+        files.forEach((file, index) => {
           const li = document.createElement('li');
-          li.classList.add('list-group-item');
-          li.textContent = file; // Assuming file.name is in the response
+          li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+          li.textContent = file;  // Assuming the API returns the file name
+
+          // Create a download button for each file
+          const downloadButton = document.createElement('a');
+          downloadButton.classList.add('btn', 'btn-primary', 'btn-sm');
+          downloadButton.textContent = 'Download';
+          downloadButton.href = `/files/download/${index + 1}`;  // Assuming the file ID is its index + 1
+          downloadButton.setAttribute('download', file);  // Set the download attribute to the file name
+
+          li.appendChild(downloadButton);
           fileList.appendChild(li);
         });
       })
-      .catch(error => console.error('Error fetching file list:', error));
+      .catch(error => {
+        console.error('Error fetching file list:', error);
+        uploadStatus.textContent = 'Error fetching file list: ' + error.message;
+      });
   }
 
   // Handle file upload
@@ -38,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchUploadedFiles(); // Refresh the file list after upload
       })
       .catch(error => {
-        uploadStatus.textContent = 'File upload failed: ' + error;
+        uploadStatus.textContent = 'File upload failed: ' + error.message;
         console.error('Error uploading file:', error);
       });
   });

@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>File Upload System</title>
-        <!-- Bootstrap CSS -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-    <div class="container mt-5">
-        <h1 class="text-center">File Upload System</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">File Upload System</h1>
 
-        <div class="upload-container mt-4">
-            <h2 class="text-primary">Upload a File</h2>
-            <form id="uploadForm" class="form-inline">
-                <div class="form-group mb-2">
-                    <input type="file" id="fileInput" name="file" class="form-control-file" required>
-                </div>
-                <button type="submit" class="btn btn-success mb-2 ml-2">Upload</button>
-            </form>
-            <p id="uploadStatus" class="mt-2"></p>
-        </div>
-
-        <div class="list-container mt-5">
-            <h2 class="text-primary">Uploaded Files</h2>
-            <ul id="fileList" class="list-group"></ul>
-        </div>
+    <div class="upload-container mt-4">
+        <h2 class="text-primary">Upload a File</h2>
+        <form id="uploadForm" class="form-inline" enctype="multipart/form-data">
+            <div class="form-group mb-2">
+                <input type="file" id="fileInput" name="file" class="form-control-file" required>
+            </div>
+            <button type="submit" class="btn btn-success mb-2 ml-2">Upload</button>
+        </form>
+        <p id="uploadStatus" class="mt-2"></p>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="app.js"></script>
-    </body>
+    <div class="list-container mt-5">
+        <h2 class="text-primary">Uploaded Files</h2>
+        <ul id="fileList" class="list-group"></ul>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="app.js"></script>
+</body>
 </html>

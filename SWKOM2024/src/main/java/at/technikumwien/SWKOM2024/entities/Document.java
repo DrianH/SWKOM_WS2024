@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Entity
 @Data
 @AllArgsConstructor
@@ -25,5 +23,8 @@ public class Document {
 
     @Column(nullable = false)
     private Long size;
-    
+
+    @Lob
+    @Column(nullable = false)
+    private byte[] content;  // This will store the file data as a BLOB
 }
