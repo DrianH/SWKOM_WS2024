@@ -1,0 +1,28 @@
+springdoc:
+  api-docs:
+    path: /api
+  swagger-ui:
+    path: /swagger-ui
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    url: jdbc:postgresql://db:5432/mydatabase
+    username: myuser
+    password: mypassword
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true  # Show the actual SQL queries executed by Hibernate
+    properties:
+      hibernate:
+        format_sql: true  # Make the SQL logs more readable
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
