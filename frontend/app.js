@@ -10,25 +10,59 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(files => {
         fileList.innerHTML = ''; // Clear current list
-        files.forEach((file, index) => {
+        files.forEach(file => {
           const li = document.createElement('li');
           li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-          li.textContent = file;  // Assuming the API returns the file name
+
+          // Display ID and name
+          li.textContent = `ID: ${file.id} - Name: ${file.name}`;
 
           // Create a download button for each file
           const downloadButton = document.createElement('a');
-          downloadButton.classList.add('btn', 'btn-primary', 'btn-sm');
+          downloadButton.classList.add('btn', 'btn-primary', 'btn-sm', 'mr-2');
           downloadButton.textContent = 'Download';
-          downloadButton.href = `/files/download/${index + 1}`;  // Assuming the file ID is its index + 1
-          downloadButton.setAttribute('download', file);  // Set the download attribute to the file name
+          downloadButton.href = `/files/download/${file.id}`;
+          downloadButton.setAttribute('download', file.name);
 
+          // Create a delete button for each file
+          const deleteButton = document.createElement('button');
+          deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+          deleteButton.textContent = 'Delete';
+          deleteButton.addEventListener('click', () => {
+            deleteFile(file.id);
+          });
+
+          // Append buttons to the list item
           li.appendChild(downloadButton);
+          li.appendChild(deleteButton);
+
           fileList.appendChild(li);
         });
       })
       .catch(error => {
         console.error('Error fetching file list:', error);
         uploadStatus.textContent = 'Error fetching file list: ' + error.message;
+      });
+  }
+
+  // Function to delete a file by ID
+  function deleteFile(fileId) {
+    fetch(`/files/delete/${fileId}`, {
+      method: 'DELETE',
+    })
+      .then(response => {
+        if (response.ok) {
+          uploadStatus.textContent = `File with ID ${fileId} deleted successfully.`;
+          fetchUploadedFiles(); // Refresh the file list
+        } else {
+          return response.text().then((message) => {
+            throw new Error(message);
+          });
+        }
+      })
+      .catch(error => {
+        uploadStatus.textContent = 'Error deleting file: ' + error.message;
+        console.error('Error deleting file:', error);
       });
   }
 

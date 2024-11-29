@@ -147,6 +147,12 @@
 			<version>1.5.2.Final</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.minio</groupId>
+			<artifactId>minio</artifactId>
+			<version>8.5.14</version>
+		</dependency>
 	</dependencies>
 
 	<build>

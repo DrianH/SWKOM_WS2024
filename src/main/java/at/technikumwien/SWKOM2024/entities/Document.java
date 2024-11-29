@@ -36,6 +36,6 @@ public class Document {
 
     @Lob
     @NotNull(message = "Document content must not be null")
-    @Column(nullable = false)
+    @Column(nullable = true)
     private byte[] content;  // This will store the file data as a BLOB
 }

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -89,9 +90,9 @@ class DocumentControllerTest {
         when(documentRepository.findAll()).thenReturn(Arrays.asList(document1, document2));
 
         // Call method and verify response
-        ResponseEntity<List<String>> response = documentController.listFiles();
+        ResponseEntity<List<Map<String, Object>>> response = documentController.listFiles();
         assertEquals(200, response.getStatusCodeValue());
-        List<String> fileNames = response.getBody();
+        List<Map<String, Object>> fileNames = response.getBody();
         assertNotNull(fileNames);
         assertEquals(2, fileNames.size());
         assertTrue(fileNames.contains("file1.pdf"));
