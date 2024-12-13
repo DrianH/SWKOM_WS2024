@@ -26,3 +26,5 @@ spring:
     port: 5672
     username: guest
     password: guest
+  elasticsearch:
+    uris: http://elasticsearch:9200

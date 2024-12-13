@@ -39,7 +39,7 @@ public class DocumentServiceImpl implements DocumentService {
         String bucketName = "documents";
         String fileName = file.getOriginalFilename();
 
-        // Ensure the bucket exists
+        // Ensure the bucket exists in MinIO
         try {
             boolean bucketExists = minioClient.bucketExists(
                     BucketExistsArgs.builder().bucket(bucketName).build()
@@ -48,7 +48,7 @@ public class DocumentServiceImpl implements DocumentService {
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
             }
         } catch (Exception e) {
-            throw new IOException("Failed to create or verify bucket", e);
+            throw new IOException("Failed to create or verify bucket in MinIO", e);
         }
 
         // Upload the file to MinIO
@@ -68,16 +68,27 @@ public class DocumentServiceImpl implements DocumentService {
         // Construct the MinIO file URL manually
         String fileUrl = "http://minio:9000/" + bucketName + "/" + fileName;
 
-        // Save metadata to PostgreSQL
+        // Save metadata and file content to PostgreSQL
         Document document = new Document();
-        document.setName(fileName);
-        document.setType(file.getContentType());
-        document.setSize(file.getSize());
-        document.setContent(null); // No longer storing file content in the database
-        documentRepository.save(document);
+        document.setName(fileName); // File name
+        document.setType(file.getContentType()); // MIME type
+        document.setSize(file.getSize()); // File size
+        document.setContent(file.getBytes()); // File content as byte[] for database storage
+
+        try {
+            document = documentRepository.save(document); // Persist to database
+        } catch (Exception e) {
+            throw new IOException("Failed to save file metadata and content to the database", e);
+        }
+
+        String message = document.getName() + ":" + fileUrl;
 
         // Send the MinIO file URL to RabbitMQ
-        rabbitTemplate.convertAndSend("file-uploads", fileUrl);
+        try {
+            rabbitTemplate.convertAndSend("file-uploads", message);
+        } catch (Exception e) {
+            throw new IOException("Failed to send name:message to RabbitMQ", e);
+        }
 
         return document;
     }

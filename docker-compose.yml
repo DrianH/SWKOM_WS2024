@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      # TODO: Multi stage build: mvn clean package + docker compose together automated | Implement Business layer
     volumes:
       - ./uploads:/uploads  # Mount the uploads directory to persist files
     ports:
@@ -66,6 +65,7 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     networks:
       - spring-boot-network
+
   minio:
     image: minio/minio
     container_name: minio

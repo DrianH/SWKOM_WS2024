@@ -9,6 +9,11 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue fileUploadsQueue() {
-        return new Queue("file-uploads", false);
+        return new Queue("file-uploads", true);
+    }
+
+    @Bean
+    public Queue resultQueue(){
+        return new Queue("result", true);
     }
 }

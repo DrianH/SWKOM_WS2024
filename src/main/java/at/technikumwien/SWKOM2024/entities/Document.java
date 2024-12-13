@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "document")
 public class Document {
 
     @Id
@@ -34,8 +35,7 @@ public class Document {
     @Column(nullable = false)
     private Long size;
 
-    @Lob
-    @NotNull(message = "Document content must not be null")
-    @Column(nullable = true)
-    private byte[] content;  // This will store the file data as a BLOB
+    @NotNull(message = "Document content must be provided")
+    @Column(name = "content", columnDefinition = "bytea", nullable = false)
+    private byte[] content;
 }

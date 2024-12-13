@@ -1,17 +1,15 @@
 package at.technikumwien.SWKOM2024.controllers;
 
 import at.technikumwien.SWKOM2024.entities.Document;
-import at.technikumwien.SWKOM2024.repositories.DocumentRepository;
 import at.technikumwien.SWKOM2024.services.DocumentService;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +17,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/files")
@@ -30,6 +27,9 @@ public class DocumentController {
     private DocumentService documentService;
 
     private static final Logger logger = LogManager.getLogger(DocumentController.class);
+
+    @Autowired
+    private ElasticsearchClient elasticsearchClient;
 
     @Operation(summary = "Upload a file")
     @PostMapping(path = "/upload", consumes = "multipart/form-data")
